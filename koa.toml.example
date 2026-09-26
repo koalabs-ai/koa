@@ -1,0 +1,32 @@
+# Configuration for this KOA. Relative paths are relative to KOA_HOME.
+# Copied to KOA_HOME/koa.toml if it doesn't already exist (koa-core init never overwrites one).
+[api]
+host = "127.0.0.1"
+port = 8700
+# The master token does NOT live here: "koa-core token rotate" generates it and
+# stores it in 10_personal/secrets/koa-core.token (permissions 600, outside git).
+# This field is only for compatibility with old installs; if it has something in
+# it, "koa-core doctor" warns and "koa-core token rotate" clears it.
+# With a token (from here or from the file) or a paired device, EVERY
+# /v1 request except /v1/health and POST /v1/pair/claim needs
+# "Authorization: Bearer <token or device token>".
+token = ""
+
+[db]
+path = "06_data/koa-core.sqlite"
+
+[pairing]
+# lifetime in seconds of a "koa-core pair" code before it expires
+code_ttl_s = 600
+
+[ui]
+# "auto" follows KOA_LANG / LC_ALL / LC_MESSAGES / LANG; or force "en" / "es".
+lang = "auto"
+
+[llm]
+# No model is required to install or use KOA. Connect one with
+# "koa-core llm setup" (it writes this section; the API key never lives
+# here, see 10_personal/secrets/<provider>.env).
+provider = ""          # "", "anthropic", "openai-compatible"
+model = ""             # default per provider: claude-opus-5 / (required for openai-compatible)
+base_url = ""          # openai-compatible only (e.g. Ollama: http://127.0.0.1:11434/v1)

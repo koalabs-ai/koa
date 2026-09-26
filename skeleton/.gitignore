@@ -1,0 +1,38 @@
+# 10_personal — private, never in git
+10_personal/*
+!10_personal/README.md
+
+# 06_data — anything that can be regenerated stays out of git
+06_data/*.sqlite
+06_data/*.sqlite-wal
+06_data/*.sqlite-shm
+
+# 08_backups — heavy content
+08_backups/*
+!08_backups/README.md
+
+# 00_inbox — temporary capture
+00_inbox/*
+!00_inbox/README.md
+
+# Common junk
+*.bak
+*.orig
+*~
+#*#
+.#*
+*sync-conflict*
+__pycache__/
+.venv/
+node_modules/
+*.egg-info/
+.DS_Store
+.idea/
+.vscode/
+
+# Temporary files
+/tmp/
+*.log
+.cache/
+build/
+dist/

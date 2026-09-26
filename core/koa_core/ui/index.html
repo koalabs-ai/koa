@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KOA</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0f172a">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <span class="brand">KOA</span>
+  <div class="topbar-right">
+    <span id="home-path" class="home-path"></span>
+    <button type="button" id="lang-toggle" class="lang-toggle" data-i18n-aria-label="lang.toggle_label">ES</button>
+  </div>
+</header>
+
+<nav class="tabs" id="tabs" role="tablist">
+  <button class="tab active" data-tab="chat" role="tab" data-i18n="tabs.chat">Chat</button>
+  <button class="tab" data-tab="pendientes" role="tab" data-i18n="tabs.items">Items</button>
+  <button class="tab" data-tab="memoria" role="tab" data-i18n="tabs.memory">Memory</button>
+  <button class="tab" data-tab="actividad" role="tab" data-i18n="tabs.activity">Activity</button>
+  <button class="tab hidden" id="tab-btn-dispositivos" data-tab="dispositivos" role="tab" data-i18n="tabs.devices">Devices</button>
+</nav>
+
+<main id="app-main">
+  <section id="tab-chat" class="panel active">
+    <div id="chat-connect-card" class="card hidden">
+      <div class="card-title" data-i18n="chat.connect_title">Connect a model</div>
+      <div class="card-meta" data-i18n="chat.connect_body">
+        KOA works without one. To chat, run this on the machine:
+      </div>
+      <div class="card-meta"><code>koa-core llm setup</code></div>
+      <div class="card-meta" data-i18n="chat.connect_options">
+        Ollama: free, local. Claude or OpenAI: paid per use, needs your own API key.
+      </div>
+    </div>
+    <div id="chat-box" class="chat-box"></div>
+    <form id="form-chat" class="row">
+      <input type="text" id="chat-input" data-i18n-placeholder="chat.placeholder" placeholder="Ask your KOA…">
+      <button type="submit" data-i18n="chat.send">Send</button>
+    </form>
+    <div id="chat-usage" class="card-meta"></div>
+  </section>
+
+  <section id="tab-pendientes" class="panel">
+    <form id="form-nuevo-item" class="row">
+      <input type="text" id="nuevo-titulo" data-i18n-placeholder="items.placeholder" placeholder="New item…" required>
+      <button type="submit" data-i18n="items.add">Add</button>
+    </form>
+    <div id="lista-items" class="list"></div>
+  </section>
+
+  <section id="tab-memoria" class="panel">
+    <form id="form-recall" class="row">
+      <input type="text" id="recall-query" data-i18n-placeholder="memory.placeholder" placeholder="Search memory…">
+      <button type="submit" data-i18n="memory.search">Search</button>
+    </form>
+    <div id="lista-memoria" class="list"></div>
+  </section>
+
+  <section id="tab-actividad" class="panel">
+    <div id="lista-actividad" class="list"></div>
+  </section>
+
+  <section id="tab-dispositivos" class="panel">
+    <div class="row">
+      <button type="button" id="btn-nuevo-emparejamiento" data-i18n="devices.new_pairing">Pair a new device</button>
+    </div>
+    <div id="nuevo-emparejamiento" class="card hidden">
+      <div class="card-title" id="nuevo-emparejamiento-code"></div>
+      <div class="card-meta"><span data-i18n="devices.expires">Expires:</span> <span id="nuevo-emparejamiento-vence"></span></div>
+      <div class="card-meta" data-i18n="devices.open_on_new_device">Open this URL on the new device:</div>
+      <div class="card-meta" id="nuevo-emparejamiento-url"></div>
+    </div>
+    <div id="lista-dispositivos" class="list"></div>
+  </section>
+</main>
+
+<!-- Pair this device (comes from "koa-core pair" or another already-connected one) -->
+<section id="pair-screen" class="connect hidden">
+  <div class="connect-box">
+    <p class="connect-title" data-i18n="pair.title">Pair this device</p>
+    <p class="connect-hint" data-i18n="pair.hint">Give this device a name to connect it to your KOA.</p>
+    <form id="form-pair">
+      <input type="text" id="pair-code" data-i18n-placeholder="pair.code_placeholder" placeholder="XXXX-XXXX"
+             autocapitalize="characters" autocomplete="off" required>
+      <input type="text" id="pair-name" data-i18n-placeholder="pair.name_placeholder" placeholder="This device's name">
+      <button type="submit" data-i18n="pair.connect">Connect</button>
+    </form>
+    <p id="pair-error" class="connect-error hidden"></p>
+    <p id="pair-done" class="connect-hint hidden"></p>
+  </div>
+</section>
+
+<!-- This KOA already requires a credential and this browser doesn't have one (or lost it) -->
+<section id="connect-screen" class="connect hidden">
+  <div class="connect-box">
+    <p class="connect-title" data-i18n="connect.title">Connect this device</p>
+    <p class="connect-hint">
+      <span data-i18n="connect.hint_prefix">This KOA asks you to identify yourself. Get a code with </span><code>koa-core pair</code><span data-i18n="connect.hint_suffix"> (or from the Devices tab on another device that's already connected) and type it here.</span>
+    </p>
+    <form id="form-connect">
+      <input type="text" id="connect-code" data-i18n-placeholder="connect.code_placeholder" placeholder="XXXX-XXXX"
+             autocapitalize="characters" autocomplete="off" required>
+      <input type="text" id="connect-name" data-i18n-placeholder="connect.name_placeholder" placeholder="This device's name">
+      <button type="submit" data-i18n="connect.connect">Connect</button>
+    </form>
+    <p id="connect-error" class="connect-error hidden"></p>
+  </div>
+</section>
+
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

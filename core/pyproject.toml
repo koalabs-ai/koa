@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "koa-core"
+version = "0.1.0"
+description = "Nucleo minimo y autocontenido de un workspace KOA para agentes de IA"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = []
+
+[project.scripts]
+koa-core = "koa_core.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools]
+packages = ["koa_core", "koa_core.llm"]
+
+[tool.setuptools.package-data]
+koa_core = ["ui/*"]
